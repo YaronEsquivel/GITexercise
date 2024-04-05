@@ -1,0 +1,53 @@
+resources:
+ repositories:
+   - repository: pipelines
+     type: git
+     name: My_demo/pipelines
+     ref: main
+     trigger:
+      - main
+
+trigger:
+  branches:
+    include:
+      - main
+
+
+stages:
+- template: workflow.yml@pipelines
+  parameters:
+    pathBuild: front
+    pathDeploy: front
+    archetype: 'TITAN'
+    version: 16
+    environment: dev 
+
+
+#jobs:
+#- template: TITAN/npm_install.yml@pipelines
+
+#- template: TITAN/run_npm_test.yml@pipelines
+#- template: TITAN/sonar.yml@pipelines
+#  parameters: 
+#    pathSonar: front
+#    project_name: 22_axity_TITAN_archetype
+#    environment: dev
+#    sonar_server: https://devtools.axity.com/sonarlts
+#    sonar_token: d54f4f0b0ecc98ca94c88640833783fe52216269
+
+
+
+
+#- template: TITAN/combinado.yml@pipelines
+#- job: Pruebas
+#  displayName: Ejecutar pruebas
+#  pool:
+#    vmImage: ubuntu-latest
+#  steps:
+#    - template: TITAN/pipeline.yml@pipelines
+#    - template: TITAN/npm_install.yml@pipelines
+#    - template: TITAN/run_test.yml@pipelines
+    #- template: TITAN/sonar.yml@pipelines
+#  name: Correr_sonar
+#  dependsOn: Correr_pruebas
+#- template: TITAN/combinado.yml@pipelines
